@@ -1,8 +1,8 @@
 """
 Purger plugin per ModMail.
 
-Scritto da Papiersnipper(Tradotto da [Italian-Riky](https://github.com/Italian-Riky)).
-Tutti i diritt riservati.
+Scritto da Papiersnipper(Tradotto da [Italian-Riky](https://github.com/Italian-Riky) ).
+Tutti i diritti riservati.
 """
 
 import asyncio
