@@ -1,8 +1,8 @@
 """
-Purger plugin for Modmail.
+Purger plugin per ModMail.
 
-Written by Papiersnipper.
-All rights reserved.
+Scritto da Papiersnipper(Tradotto da [Italian-Riky](https://github.com/Italian-Riky)).
+Tutti i diritt riservati.
 """
 
 import asyncio
@@ -15,8 +15,8 @@ from core.models import PermissionLevel
 
 
 class Purger(Cog):
-    """Delete multiple messages at a time.
-    More info: [click here](https://github.com/papiersnipper/modmail-plugins/tree/master/purger)
+    """Elimina piu messaggi nello stesso tempo!(Plugin tradotto da [Italian-Riky] (https://github.com/Italian-Riky)).
+    Piu informazioni: [Clicca qua!](https://github.com/papiersnipper/modmail-plugins/tree/master/purger)
     """
 
     def __init__(self, bot: Bot) -> None:
@@ -25,16 +25,16 @@ class Purger(Cog):
     @command()
     @has_permissions(PermissionLevel.MODERATOR)
     async def purge(self, ctx: Context, amount: int) -> None:
-        """Delete the specified amount of messages."""
+        """Elimina il numero specificato di messaggi."""
         if amount < 1:
             return
 
         try:
             deleted = await ctx.channel.purge(limit=amount + 1)
         except Forbidden:
-            return await ctx.send("I don't have permission to delete messages here.")
+            return await ctx.send("Non ho il permesso di eliminare i messaggi qua.")
 
-        delete_message: Message = await ctx.send(f"Successfully deleted {len(deleted)} messages!")
+        delete_message: Message = await ctx.send(f"Eliminati con successo {len(deleted)} Messaggi!")
         await asyncio.sleep(3)
         await delete_message.delete()
 
