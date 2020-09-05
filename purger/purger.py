@@ -15,7 +15,7 @@ from core.models import PermissionLevel
 
 
 class Purger(Cog):
-    """Elimina piu messaggi nello stesso tempo!(Plugin tradotto da [Italian Riky](https://github.com/Italian-Riky) ).
+    """Elimina piu messaggi nello stesso tempo!(Plugin tradotto da [Italian Riky](https://github.com/Italian-Riky)).
     Piu informazioni: [Clicca qua!](https://github.com/papiersnipper/modmail-plugins/tree/master/purger)
     """
 
