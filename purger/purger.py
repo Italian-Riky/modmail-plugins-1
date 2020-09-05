@@ -1,7 +1,7 @@
 """
 Purger plugin per ModMail.
 
-Scritto da Papiersnipper(Tradotto da [Italian Riky](https://github.com/Italian-Riky) ).
+Scritto da Papiersnipper(Tradotto da Italian Riky:https://github.com/Italian-Riky ).
 Tutti i diritti riservati.
 """
 
@@ -15,7 +15,7 @@ from core.models import PermissionLevel
 
 
 class Purger(Cog):
-    """Elimina piu messaggi nello stesso tempo!(Plugin tradotto da [Italian Riky] (https://github.com/Italian-Riky)).
+    """Elimina piu messaggi nello stesso tempo!(Plugin tradotto da [Italian Riky](https://github.com/Italian-Riky) ).
     Piu informazioni: [Clicca qua!](https://github.com/papiersnipper/modmail-plugins/tree/master/purger)
     """
 
