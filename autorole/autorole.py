@@ -1,8 +1,8 @@
 """
-Autorole plugin for Modmail.
+Autorole plugin per Modmail.
 
-Written by Papiersnipper.
-All rights reserved.
+Scritto da Papiersnipper(tradotto da Italian-Riky).
+Tutti i diritti riservati.
 """
 
 import asyncio
@@ -22,8 +22,8 @@ logger = logging.getLogger("Modmail")
 
 class Autorole(Cog):
     """
-    Auto-assign a role to a user when they join your server.
-    More info: [click here](https://github.com/papiersnipper/modmail-plugins/tree/master/autorole)
+    Assegna Ruoli automaticamente appena un membro entra nel server! (Plugin tradotto da [Italian Riky](https://github.com/Italian-Riky)).
+    More info: [Clicca qua](https://github.com/papiersnipper/modmail-plugins/tree/master/autorole)
     """
 
     def __init__(self, bot: Bot) -> None:
@@ -32,7 +32,7 @@ class Autorole(Cog):
         asyncio.create_task(self.migrate())
 
     async def migrate(self) -> None:
-        """Migrates the database model to contain a list of role ID's instead of the ``rolename`` field."""
+        """Migra il modello di database per contenere un elenco di ID ruolo invece del campo `` nome ruolo ``."""
         config = await self.db.find_one({"_id": "autorole-config"})
 
         if config is None:
@@ -57,16 +57,16 @@ class Autorole(Cog):
 
     @Cog.listener()
     async def on_member_join(self, member: Member) -> None:
-        """Give the joined member all currently set roles."""
+        """Assegna al membro iscritto tutti i ruoli attualmente impostati."""
         config = await self.db.find_one({"_id": "autorole-config"})
 
         if config is None:
-            return logger.warning("Member joined while no role was set!")
+            return logger.warning("Il membro si è unito mentre nessun ruolo era stato impostato!")
 
         try:
             role_ids = config["roles"]
         except KeyError:
-            return logger.error("Something went wrong in your database!")
+            return logger.error("Qualcosa è andato storto nel tuo database!")
 
         if not role_ids:
             return
@@ -83,13 +83,13 @@ class Autorole(Cog):
     @group(name="autorole", invoke_without_command=True)
     @has_permissions(PermissionLevel.ADMINISTRATOR)
     async def autorole(self, ctx: Context) -> None:
-        """Auto-assign a role to a user when they join your server."""
+        """Assegna automaticamente un ruolo a un utente quando si unisce al tuo server."""
         await ctx.send_help(ctx.command)
 
     @autorole.command(name="set")
     @has_permissions(PermissionLevel.ADMINISTRATOR)
     async def autorole_set(self, ctx: Context, roles: Greedy[Role]) -> None:
-        """Set the default role(s) a member gets when joining."""
+        """Imposta i ruoli predefiniti che un membro ottiene quando si unisce."""
         if not roles:
             return await ctx.send_help(ctx.command)
 
@@ -97,7 +97,7 @@ class Autorole(Cog):
 
         if config is None:
             await self.db.insert_one({"_id": "autorole-config"})
-            logger.info("Created autorole config file.")
+            logger.info("Creato file di configurazione autorole.")
 
         role_ids = [r.id for r in roles]
         role_mentions = [r.mention for r in roles]
@@ -108,7 +108,7 @@ class Autorole(Cog):
 
         embed = Embed(
             title="Autorole",
-            url="https://github.com/papiersnipper/modmail-plugins/blob/master/autorole",
+            url="https://github.com/Italian-Riky/modmail-plugins-1/blob/master/autorole",
             description=f"{', '.join(role_mentions)} will now be given to all new members.",
             color=self.bot.main_color,
         )
@@ -129,7 +129,7 @@ class Autorole(Cog):
 
         embed = Embed(
             title="Autorole",
-            url="https://github.com/papiersnipper/modmail-plugins/blob/master/autorole",
+            url="https://github.com/Italian-Riky/modmail-plugins-1/blob/master/autorole",
             description=f"Added {role.mention} for {users} members.",
             colour=self.bot.main_color,
         )
@@ -142,7 +142,7 @@ class Autorole(Cog):
         """Clear the default role(s)."""
         embed = Embed(
             title="Autorole",
-            url="https://github.com/papiersnipper/modmail-plugins/blob/master/autorole",
+            url="https://github.com/Italian-Riky/modmail-plugins-1/blob/master/autorole",
             description=f"Cleared role(s).",
             color=self.bot.main_color,
         )
