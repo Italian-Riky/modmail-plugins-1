@@ -11,7 +11,6 @@ from datetime import datetime
 from discord import Color, Embed, Message
 from discord.ext.commands import Bot, Cog, Context, group
 from motor.motor_asyncio import AsyncIOMotorCollection
-from pyimgur import Imgur
 
 from core.checks import has_permissions
 from core.models import PermissionLevel
@@ -80,18 +79,6 @@ class Embedder(Cog):
         )
 
         embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
-
-        if len(ctx.message.attachments) == 1:
-            try:
-                imgur = Imgur("0f032be3851849a")
-                image_url = ctx.message.attachments[0].url
-
-                uploaded_image = imgur.upload_image(url=image_url, title="Modmail")
-                embed.set_image(url=uploaded_image.link)
-            except BaseException:
-                pass
-        elif len(ctx.message.attachments) > 1:
-            await ctx.message.delete()
 
             embed = Embed(
                 title="Embed",
