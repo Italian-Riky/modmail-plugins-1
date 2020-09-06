@@ -11,7 +11,7 @@ from datetime import datetime
 from discord import Color, Embed, Message
 from discord.ext.commands import Bot, Cog, Context, group
 from motor.motor_asyncio import AsyncIOMotorCollection
-from pyimgur import Imgur
+from pyimgur import pyimgur
 
 from core.checks import has_permissions
 from core.models import PermissionLevel
