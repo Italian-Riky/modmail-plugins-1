@@ -1,8 +1,8 @@
 """
-Supporters plugin for Modmail.
+Supporters plugin per Modmail.
 
-Written by Papiersnipper.
-All rights reserved.
+Scritto da Papiersnipper, Tradotto da Italian-Riky.
+Tutti i dirriti riservati.
 """
 
 from discord import Embed
@@ -13,8 +13,8 @@ from core.models import PermissionLevel
 
 
 class Supporters(Cog):
-    """Let your users know who is part of the support team.
-    More info: [click here](https://github.com/papiersnipper/modmail-plugins/tree/master/supporters)
+    """Controlla chi sono le persone che aiutano.
+    Piu informazioni(inglese): [click here](https://github.com/papiersnipper/modmail-plugins/tree/master/supporters)
     """
 
     def __init__(self, bot: Bot) -> None:
@@ -23,15 +23,15 @@ class Supporters(Cog):
     @command(aliases=["helpers", "supporters", "supportmembers"])
     @has_permissions(PermissionLevel.REGULAR)
     async def support(self, ctx: Context) -> None:
-        """Send an embed with all the support members."""
+        """Invia un'embed con le persone che aiutano."""
 
         category_id = self.bot.config.get("main_category_id")
 
         if category_id is None:
             embed = Embed(
-                title="Supporters",
+                title="Aiutanti",
                 url="https://github.com/papiersnipper/modmail-plugins/blob/master/supporters",
-                description=f"I couldn't find the modmail category.\nMake sure it's set using the `?config set main_category_id` command.",
+                description=f"Non riesco a trovare la categoria del modmail.\nAssicurati di aver usato il comando `?config set main_category_id`.",
                 color=self.bot.main_color,
             )
 
@@ -50,7 +50,7 @@ class Supporters(Cog):
                         member_list.append(member.mention)
 
         embed = Embed(
-            title="Support Members",
+            title="Membri Aiutanti",
             url="https://github.com/papiersnipper/modmail-plugins/blob/master/supporters",
             colour=self.bot.main_color,
             description=", ".join(member_list),
