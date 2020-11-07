@@ -1,8 +1,8 @@
 """
-Leveling plugin for Modmail.
+Plugin per livellare per Modmail.
 
-Written by Papiersnipper.
-All rights reserved.
+Scritto da Papiersnipper, Tradotto da Italian-Riky.
+Tutti i diritti riservati.
 """
 
 from discord import Embed, Message, User
@@ -14,8 +14,8 @@ from core.models import PermissionLevel
 
 
 class Leveling(Cog):
-    """A leveling system for your server: see who's active and who's not.
-    More info: [click here](https://github.com/papiersnipper/modmail-plugins/tree/master/leveling)
+    """Un sistema per livellare e vedere chi è attivo e chi no. (Plugin tradotto da [Italian Riky](https://github.com/Italian-Riky))
+    Più informazioni: [Clicca qua](https://github.com/papiersnipper/modmail-plugins/tree/master/leveling)
     """
 
     def __init__(self, bot: Bot) -> None:
@@ -51,8 +51,8 @@ class Leveling(Cog):
 
             if person["level"] < level:
                 await message.channel.send(
-                    f"Congratulations, {message.author.mention}, "
-                    f"you advanced to level {level}!"
+                    f"Congratulazioni, {message.author.mention}, "
+                    f"sei passato al livello {level}!"
                 )
 
                 await self.db.update_one(
@@ -90,24 +90,24 @@ class Leveling(Cog):
 
         if stats is None:
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description=f"User {user.name} hasn't sent a single message here.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description=f"{user.name} non ha mandato neanche un messaggio qua.",
                 color=self.bot.main_color,
             )
 
             return await ctx.send(embed=embed)
 
         embed = Embed(
-            title="Leveling",
-            url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-            description=f"{user.name} is level "
+            title="Livellamento",
+            url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+            description=f"{user.name} è al livello "
             + str(stats["level"])
-            + " and has "
+            + " e ha "
             + str(stats["exp"])
-            + " experience points. They also have "
+            + " punti esperienza. Lui ha anche "
             + str(stats["gold"])
-            + " gold.",
+            + " di oro.",
             color=self.bot.main_color,
         )
 
@@ -116,7 +116,7 @@ class Leveling(Cog):
     @level.command(name="amount")
     @has_permissions(PermissionLevel.ADMINISTRATOR)
     async def amount(self, ctx: Context, amount: str = "") -> None:
-        """Change the amount of gold given to a user per message."""
+        """Cambia il totale di oro dato per messaggio."""
 
         if amount == "":
             try:
@@ -125,9 +125,9 @@ class Leveling(Cog):
                 return await ctx.send_help(ctx.command)
             
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description=f"The amount of gold given per message is {amount}.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description=f"Il totale di oro dato per messaggio è {amount}.",
                 color=self.bot.main_color,
             )
 
@@ -137,9 +137,9 @@ class Leveling(Cog):
             amount = int(amount)
         except ValueError:
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description="That doesn't look like a valid number.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description="Questo non sembra un numero valido.",
                 color=self.bot.main_color,
             )
 
@@ -147,9 +147,9 @@ class Leveling(Cog):
 
         if amount < 1:
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description="I can't give negative gold.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description="Non posso dare negativo oro.",
                 color=self.bot.main_color,
             )
 
@@ -160,9 +160,9 @@ class Leveling(Cog):
         if config is None:
             await self.db.insert_one({"_id": "leveling-config", "amount_per_message": amount})
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description=f"I set the amount of gold given to {amount}.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description=f"Ho impostato il numero di oro dato per messaggio a {amount}.",
                 color=self.bot.main_color,
             )
         else:
@@ -170,9 +170,9 @@ class Leveling(Cog):
                 {"_id": "leveling-config"}, {"$set": {"amount_per_message": amount}}
             )
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description=f"I updated the amount of gold given to {amount}.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description=f"Ho aggiornato il numero di oro dato a {amount}.",
                 color=self.bot.main_color,
             )
 
@@ -181,14 +181,14 @@ class Leveling(Cog):
     @level.command(name="leaderboard", aliases=["lb"])
     @has_permissions(PermissionLevel.REGULAR)
     async def leaderboard(self, ctx: Context) -> None:
-        """Check who has the most experience points."""
+        """Controlla chi ha più punti esperienza."""
 
         users = self.db.find({}).sort("exp", -1)
 
         embed = Embed(
-            title="Leaderboard for " + ctx.guild.name,
+            title="Punteggi " + ctx.guild.name,
             colour=self.bot.main_color,
-            url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
+            url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
         )
 
         for user in await users.to_list(length=11):
@@ -202,15 +202,15 @@ class Leveling(Cog):
     @level.command(name="give")
     @has_permissions(PermissionLevel.ADMINISTRATOR)
     async def give(self, ctx: Context, user: User, amount: str) -> None:
-        """Give a specific amount of gold to a user."""
+        """Dai dell'oro a un membro."""
 
         try:
             amount = int(amount)
         except ValueError:
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description="That doesn't look like a valid number.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description="Questo non sembra un numero valido.",
                 color=self.bot.main_color,
             )
 
@@ -219,8 +219,8 @@ class Leveling(Cog):
         if amount < 1:
             embed = Embed(
                 title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description="I can't give negative gold.",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description="Non posso dare negativo oro.",
                 color=self.bot.main_color,
             )
 
@@ -230,9 +230,9 @@ class Leveling(Cog):
 
         if stats is None:
             embed = Embed(
-                title="Leveling",
-                url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-                description=f"User {user.name} hasn't sent a single message here.",
+                title="Livellamento",
+                url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+                description=f"{user.name} Non ha mandato neanche un messaggio qui.",
                 color=self.bot.main_color,
             )
 
@@ -243,9 +243,9 @@ class Leveling(Cog):
         await self.db.update_one({"id": user.id}, {"$set": {"gold": gold + amount}})
 
         embed = Embed(
-            title="Leveling",
-            url="https://github.com/papiersnipper/modmail-plugins/blob/master/leveling",
-            description=f"I gave {amount} gold to {user.name}",
+            title="Livellamento",
+            url="https://github.com/Italian-Riky/modmail-plugins/blob/master/leveling",
+            description=f"Ho dato {amount} oro a {user.name}",
             color=self.bot.main_color,
         )
 
