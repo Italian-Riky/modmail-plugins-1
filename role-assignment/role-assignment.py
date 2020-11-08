@@ -13,8 +13,8 @@ logger = logging.getLogger("Modmail")
 
 
 class RoleAssignment(Cog):
-    """Assign roles using reactions.
-    More info: [click here](https://github.com/papiersnipper/modmail-plugins/tree/master/role-assignment)
+    """Assegna ruoli usando le reazioni. (Plugin tradotto da [Italian Riky](https://github.com/Italian-Riky))
+    Più informazioni: [clicca qua](https://github.com/papiersnipper/modmail-plugins/tree/master/role-assignment)
     """
 
     def __init__(self, bot):
@@ -52,13 +52,13 @@ class RoleAssignment(Cog):
         category_id = int(self.bot.config["main_category_id"])
 
         if category_id is None:
-            print("No main_category_id found!")
+            print("main_category_id non trovato!")
             return
 
         guild = self.bot.get_guild(int(self.bot.config["guild_id"]))
 
         if guild is None:
-            print("No guild_id found!")
+            print("guild_id non trovato!")
             return
 
         for c in guild.categories:
@@ -92,19 +92,19 @@ class RoleAssignment(Cog):
                         continue
 
                 await self.update_db()
-                logger.info("Synced role with the database")
+                logger.info("Ruolo sincronizzato con il database")
 
     @commands.group(name="role", aliases=["roles"], invoke_without_command=True)
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def role(self, ctx):
-        """Automaticly assign roles when you click on the emoji."""
+        """Assegna automaticamente i ruoli quando fai clic sull'emoji."""
 
         await ctx.send_help(ctx.command)
 
     @role.command(name="add")
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def add(self, ctx, emoji: discord.Emoji, *, role: discord.Role):
-        """Add a clickable emoji to each new message."""
+        """Aggiungi un'emoji cliccabile a ogni nuovo messaggio."""
 
         config = await self.db.find_one({"_id": "role-config"})
 
@@ -122,34 +122,34 @@ class RoleAssignment(Cog):
             failed = False
 
         if failed:
-            return await ctx.send("That emoji already assigns a role.")
+            return await ctx.send("Quell'emoji assegna già un ruolo.")
 
         emoji_dict[f"<:{emoji.name}:{emoji.id}>"] = role.name
 
         await self.db.update_one({"_id": "role-config"}, {"$set": {"emoji": emoji_dict}})
 
-        await ctx.send(f'I successfully pointed <:{emoji.name}:{emoji.id}> to "{role.name}"')
+        await ctx.send(f'Ho puntato con successo <:{emoji.name}:{emoji.id}> a "{role.name}"')
 
     @role.command(name="remove")
     @checks.has_permissions(PermissionLevel.ADMINISTRATOR)
     async def remove(self, ctx, emoji: discord.Emoji):
-        """Remove a clickable emoji from each new message."""
+        """Rimuovi un'emoji cliccabile da ogni nuovo messaggio."""
 
         config = await self.db.find_one({"_id": "role-config"})
 
         if config is None:
-            return await ctx.send("There are no emoji set for this server.")
+            return await ctx.send("Non ci sono emoji impostate per questo server.")
 
         emoji_dict = config["emoji"]
 
         try:
             del emoji_dict[f"<:{emoji.name}:{emoji.id}>"]
         except KeyError:
-            return await ctx.send("That emoji is not configured")
+            return await ctx.send("Quell'emoji non è configurata")
 
         await self.db.update_one({"_id": "role-config"}, {"$set": {"emoji": emoji_dict}})
 
-        await ctx.send(f"I successfully deleted <:{emoji.name}:{emoji.id}>.")
+        await ctx.send(f"Ho eliminato con successo <:{emoji.name}:{emoji.id}>.")
 
     @Cog.listener()
     async def on_thread_ready(self, thread):
@@ -187,7 +187,7 @@ class RoleAssignment(Cog):
         role = discord.utils.get(guild.roles, name=role)
 
         if role is None:
-            return await guild.get_channel(payload.channel_id).send("I couldn't find that role...")
+            return await guild.get_channel(payload.channel_id).send("Non trovo quel ruolo...")
 
         for m in guild.members:
             if m.id == member_id:
@@ -197,7 +197,7 @@ class RoleAssignment(Cog):
 
         await member.add_roles(role)
         await guild.get_channel(payload.channel_id).send(
-            f"Successfully added {role} to {member.name}"
+            f"Aggiunto {role} a {member.name}"
         )
 
     @Cog.listener()
@@ -220,7 +220,7 @@ class RoleAssignment(Cog):
         role = discord.utils.get(guild.roles, name=role)
 
         if role is None:
-            return await guild.get_channel(payload.channel_id).send("Configured role not found.")
+            return await guild.get_channel(payload.channel_id).send("Ruolo configurato non trovato.")
 
         for m in guild.members:
             if m.id == member_id:
@@ -230,7 +230,7 @@ class RoleAssignment(Cog):
 
         await member.remove_roles(role)
         await guild.get_channel(payload.channel_id).send(
-            f"Successfully removed {role} from {member.name}"
+            f"Rimosso con successo {role} a {member.name}"
         )
 
 
